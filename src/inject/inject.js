@@ -1,13 +1,13 @@
 (function() {
-    function htmlreplace(a, b, element) {    
+    function htmlreplace(a, b, reflags, element) {    
         if (!element) element = document.body;    
         var nodes = element.childNodes;
+        var r = new RegExp(a, reflags);
         for (var n=0; n<nodes.length; n++) {
             if (nodes[n].nodeType == Node.TEXT_NODE) {
-                var r = new RegExp(a, 'gi');
                 nodes[n].textContent = nodes[n].textContent.replace(r, b);
             } else {
-                htmlreplace(a, b, nodes[n]);
+                htmlreplace(a, b, reflags, nodes[n]);
             }
         }
     }
@@ -16,7 +16,9 @@
 	    if (document.readyState === "complete") {
 		    clearInterval(readyStateCheckInterval);
 
-		    htmlreplace("systemd", "butts");
+		    htmlreplace("SYSTEMD", "BUTTS", 'g');
+		    htmlreplace("System[dD]", "Butts", 'g');
+		    htmlreplace("systemd", "butts", 'gi');
 	    }
     }, 10);
 })();
